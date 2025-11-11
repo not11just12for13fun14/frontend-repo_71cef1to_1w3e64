@@ -6,6 +6,7 @@ import Navbar from './components/Navbar'
 import CaseStudyCard from './components/CaseStudy'
 import { PremiumBackground } from './components/PremiumGradients'
 import useAnalytics from './components/Analytics'
+import { MagneticButton, ParallaxContainer, FloatIn } from './components/MotionPrimitives'
 
 function App() {
   const bookingUrl = useMemo(() => (
@@ -25,61 +26,56 @@ function App() {
       <section className="relative pt-24 overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-10 items-center">
           <div className="py-8">
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 text-xs font-medium text-indigo-700 bg-indigo-50 rounded-full px-3 py-1 mb-4 ring-1 ring-inset ring-indigo-200"
-            >
-              Premium portfolio redesign
-            </motion.div>
-            <motion.h1
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.05 }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight"
-            >
-              Convert premium clients with a world‑class portfolio
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="mt-4 text-lg text-gray-600 max-w-xl"
-            >
-              Narrative‑driven case studies, crystal‑clear services, and a frictionless path to book a strategy call.
-            </motion.p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <a
+            <FloatIn>
+              <div
+                className="inline-flex items-center gap-2 text-xs font-medium text-indigo-700 bg-indigo-50 rounded-full px-3 py-1 mb-4 ring-1 ring-inset ring-indigo-200"
+              >
+                Premium portfolio redesign
+              </div>
+            </FloatIn>
+            <FloatIn delay={0.05}>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+                Convert premium clients with a world‑class portfolio
+              </h1>
+            </FloatIn>
+            <FloatIn delay={0.1}>
+              <p className="mt-4 text-lg text-gray-600 max-w-xl">
+                Narrative‑driven case studies, crystal‑clear services, and a frictionless path to book a strategy call.
+              </p>
+            </FloatIn>
+            <div className="mt-6 flex flex-wrap gap-3 group">
+              <MagneticButton
                 href={bookingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-md bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-600 text-white px-5 py-3 font-medium shadow-sm hover:shadow-indigo-500/30 transition-all"
+                className="inline-flex items-center justify-center rounded-md bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-600 text-white px-5 py-3 font-medium shadow-sm hover:shadow-indigo-500/30 transition-all group"
                 onClick={() => track('cta_click', { location: 'hero', label: 'Book a strategy call' })}
               >
                 Book a strategy call
-              </a>
-              <a
+              </MagneticButton>
+              <motion.a
                 href="#work"
                 className="inline-flex items-center justify-center rounded-md border border-gray-200 px-5 py-3 font-medium text-gray-900 hover:bg-gray-50 transition-colors"
                 onClick={() => track('nav_click', { label: 'See case studies' })}
+                whileHover={{ y: -2 }}
+                whileTap={{ y: 0 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 25 }}
               >
                 See case studies
-              </a>
+              </motion.a>
             </div>
-            <div className="mt-6 text-sm text-gray-500">
-              Limited weekly availability. Average project ROI +25–40% in 90 days.
-            </div>
+            <FloatIn delay={0.15}>
+              <div className="mt-6 text-sm text-gray-500">
+                Limited weekly availability. Average project ROI +25–40% in 90 days.
+              </div>
+            </FloatIn>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-            className="relative aspect-square lg:aspect-[4/3] rounded-xl overflow-hidden ring-1 ring-black/5"
-          >
-            <Spline scene="https://prod.spline.design/VJLoxp84lCdVfdZu/scene.splinecode" />
-          </motion.div>
+          <ParallaxContainer className="relative aspect-square lg:aspect-[4/3] rounded-xl overflow-hidden ring-1 ring-black/5">
+            <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6 }}>
+              <Spline scene="https://prod.spline.design/VJLoxp84lCdVfdZu/scene.splinecode" />
+            </motion.div>
+          </ParallaxContainer>
         </div>
       </section>
 
@@ -90,47 +86,53 @@ function App() {
             <h2 className="text-2xl sm:text-3xl font-bold">Featured case studies</h2>
             <p className="mt-3 text-gray-600 max-w-2xl">Proof over promises. Real metrics from production builds.</p>
           </div>
-          <a href={bookingUrl} target="_blank" rel="noreferrer" className="hidden sm:inline-flex items-center rounded-md bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-600 text-white px-4 py-2 text-sm font-medium shadow-sm hover:shadow-indigo-500/30 transition-all" onClick={() => track('cta_click', { location: 'case_studies_header', label: 'Book a call' })}>
+          <MagneticButton href={bookingUrl} target="_blank" rel="noreferrer" className="hidden sm:inline-flex items-center rounded-md bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-600 text-white px-4 py-2 text-sm font-medium shadow-sm hover:shadow-indigo-500/30 transition-all" onClick={() => track('cta_click', { location: 'case_studies_header', label: 'Book a call' })}>
             Book a call
-          </a>
+          </MagneticButton>
         </div>
         <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <CaseStudyCard
-            company="SaaSFinch"
-            industry="Fintech SaaS"
-            summary="Revamped onboarding and pricing flow, optimized for qualified trials and enterprise demos."
-            metrics={[
-              { label: 'Qualified demos', value: '+68%' },
-              { label: 'Paywall CTR', value: '+32%' },
-              { label: 'Sales cycle', value: '-29%' },
-            ]}
-            image="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1200&auto=format&fit=crop"
-            href="#"
-          />
-          <CaseStudyCard
-            company="DevTools Co."
-            industry="Developer Tools"
-            summary="Shipped a narrative portfolio with deep dives on performance wins and DX improvements."
-            metrics={[
-              { label: 'MQL quality', value: '+61%' },
-              { label: 'Newsletter growth', value: '×3.4' },
-              { label: 'Avg. deal size', value: '+22%' },
-            ]}
-            image="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop"
-            href="#"
-          />
-          <CaseStudyCard
-            company="HealthFlow"
-            industry="Digital Health"
-            summary="Refocused story on outcomes and risk reversal; embedded calendar for immediate booking."
-            metrics={[
-              { label: 'Call-book rate', value: '↑ 2.3×' },
-              { label: 'Lead qual', value: '≥ 62%' },
-              { label: 'Price uplift', value: '+27%' },
-            ]}
-            image="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200&auto=format&fit=crop"
-            href="#"
-          />
+          <FloatIn>
+            <CaseStudyCard
+              company="SaaSFinch"
+              industry="Fintech SaaS"
+              summary="Revamped onboarding and pricing flow, optimized for qualified trials and enterprise demos."
+              metrics={[
+                { label: 'Qualified demos', value: '+68%' },
+                { label: 'Paywall CTR', value: '+32%' },
+                { label: 'Sales cycle', value: '-29%' },
+              ]}
+              image="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1200&auto=format&fit=crop"
+              href="#"
+            />
+          </FloatIn>
+          <FloatIn delay={0.05}>
+            <CaseStudyCard
+              company="DevTools Co."
+              industry="Developer Tools"
+              summary="Shipped a narrative portfolio with deep dives on performance wins and DX improvements."
+              metrics={[
+                { label: 'MQL quality', value: '+61%' },
+                { label: 'Newsletter growth', value: '×3.4' },
+                { label: 'Avg. deal size', value: '+22%' },
+              ]}
+              image="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop"
+              href="#"
+            />
+          </FloatIn>
+          <FloatIn delay={0.1}>
+            <CaseStudyCard
+              company="HealthFlow"
+              industry="Digital Health"
+              summary="Refocused story on outcomes and risk reversal; embedded calendar for immediate booking."
+              metrics={[
+                { label: 'Call-book rate', value: '↑ 2.3×' },
+                { label: 'Lead qual', value: '≥ 62%' },
+                { label: 'Price uplift', value: '+27%' },
+              ]}
+              image="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200&auto=format&fit=crop"
+              href="#"
+            />
+          </FloatIn>
         </div>
       </section>
 
@@ -159,7 +161,7 @@ function App() {
                 <h3 className="text-xl font-semibold">Ready to talk?</h3>
                 <p className="text-gray-600">Grab a 20‑minute fit call. No pressure, just clarity.</p>
               </div>
-              <a
+              <MagneticButton
                 href={bookingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -167,7 +169,7 @@ function App() {
                 onClick={() => track('cta_click', { location: 'contact', label: 'Book now' })}
               >
                 Book now
-              </a>
+              </MagneticButton>
             </div>
           </div>
         </div>
